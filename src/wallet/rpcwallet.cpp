@@ -551,7 +551,7 @@ Value listtermdeposits(const Array &params, bool fHelp)
         struct tm * timeinfo;
         char buffer[80];
         time (&rawtime);
-        rawtime+=blocksRemaining*120;
+        rawtime+=blocksRemaining*154;
         timeinfo = localtime(&rawtime);
         strftime(buffer,80,"%Y/%m/%d",timeinfo);
         std::string str(buffer);
