@@ -816,7 +816,12 @@ CAmount CWallet::GetDebit(const CTxIn &txin, const isminefilter& filter, const i
             const CWalletTx& prev = (*mi).second;
             if (txin.prevout.n < prev.vout.size())
                 if (IsMine(prev.vout[txin.prevout.n]) & filter){
-                    return prev.vout[txin.prevout.n].GetValueWithInterest(chainActive.Height()-prev.GetDepthInMainChain(),chainActive.Height()-depthInMainChain);
+                    if(depthInMainChain==0){
+                        //special value here to get debits without interest
+                        return prev.vout[txin.prevout.n].GetValueWithInterest(0,0);
+                    }else{
+                        return prev.vout[txin.prevout.n].GetValueWithInterest(chainActive.Height()-prev.GetDepthInMainChain(),chainActive.Height()-depthInMainChain);
+                    }
                 }
         }
     }
@@ -1159,7 +1164,7 @@ set<uint256> CWalletTx::GetConflicts() const
     return result;
 }
 
-CAmount CWalletTx::GetDebit(const isminefilter& filter) const
+CAmount CWalletTx::GetDebit(const isminefilter& filter, bool addInterest) const
 {
     if (vin.empty())
         return 0;
@@ -1171,8 +1176,8 @@ CAmount CWalletTx::GetDebit(const isminefilter& filter) const
             debit += nDebitCached;
         else
         {
-            nDebitCached = pwallet->GetDebit(*this, ISMINE_SPENDABLE, GetDepthInMainChain());
-            fDebitCached = true;
+            nDebitCached = pwallet->GetDebit(*this, ISMINE_SPENDABLE, addInterest?GetDepthInMainChain():0);
+            //fDebitCached = true;
             debit += nDebitCached;
         }
     }
@@ -1182,8 +1187,8 @@ CAmount CWalletTx::GetDebit(const isminefilter& filter) const
             debit += nWatchDebitCached;
         else
         {
-            nWatchDebitCached = pwallet->GetDebit(*this, ISMINE_WATCH_ONLY, GetDepthInMainChain());
-            fWatchDebitCached = true;
+            nWatchDebitCached = pwallet->GetDebit(*this, ISMINE_WATCH_ONLY, addInterest?GetDepthInMainChain():0);
+            //fWatchDebitCached = true;
             debit += nWatchDebitCached;
         }
     }
@@ -1199,13 +1204,12 @@ CAmount CWalletTx::GetCredit(const isminefilter& filter) const
     int64_t credit = 0;
     if (filter & ISMINE_SPENDABLE)
     {
-        // GetBalance can assume transactions in mapWallet won't change
         if (fCreditCached)
             credit += nCreditCached;
         else
         {
             nCreditCached = pwallet->GetCredit(*this, ISMINE_SPENDABLE, 0);
-            fCreditCached = true;
+            //fCreditCached = true;
             credit += nCreditCached;
         }
     }
@@ -1216,7 +1220,7 @@ CAmount CWalletTx::GetCredit(const isminefilter& filter) const
         else
         {
             nWatchCreditCached = pwallet->GetCredit(*this, ISMINE_WATCH_ONLY, 0);
-            fWatchCreditCached = true;
+            //fWatchCreditCached = true;
             credit += nWatchCreditCached;
         }
     }
