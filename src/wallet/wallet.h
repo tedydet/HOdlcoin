@@ -357,7 +357,7 @@ public:
     }
 
     //! filter decides which addresses will count towards the debit
-    CAmount GetDebit(const isminefilter& filter) const;
+    CAmount GetDebit(const isminefilter& filter, bool addInterest=true) const;
     CAmount GetCredit(const isminefilter& filter) const;
     CAmount GetImmatureCredit(bool fUseCache=true) const;
     CAmount GetImmatureTermDepositCredit() const;
@@ -529,6 +529,7 @@ public:
     }
 
     std::vector<COutput> GetTermDepositInfo();
+    std::vector<COutput> GetTermDepositInfo(const std::string& strAccount);
 
     std::map<uint256, CWalletTx> mapWallet;
 
@@ -654,7 +655,7 @@ public:
     std::set<CTxDestination> GetAccountAddresses(std::string strAccount) const;
 
     isminetype IsMine(const CTxIn& txin) const;
-    CAmount GetDebit(const CTxIn& txin, const isminefilter& filter) const;
+    CAmount GetDebit(const CTxIn& txin, const isminefilter& filter, const int& nDepth) const;
     isminetype IsMine(const CTxOut& txout) const;
     CAmount GetCredit(const CTxOut& txout, const isminefilter& filter, const int& nDepth) const;
     bool IsChange(const CTxOut& txout) const;
@@ -662,7 +663,7 @@ public:
     bool IsMine(const CTransaction& tx) const;
     /** should probably be renamed to IsRelevantToMe */
     bool IsFromMe(const CTransaction& tx) const;
-    CAmount GetDebit(const CTransaction& tx, const isminefilter& filter) const;
+    CAmount GetDebit(const CTransaction& tx, const isminefilter& filter, const int& nDepth) const;
     CAmount GetCredit(const CTransaction& tx, const isminefilter& filter, const int& nDepth) const;
     CAmount GetChange(const CTransaction& tx) const;
     void SetBestChain(const CBlockLocator& loc);
