@@ -334,10 +334,13 @@ CBlockTemplate* CreateNewBlock(const CScript& scriptPubKeyIn)
         nLastBlockTx = nBlockTx;
         nLastBlockSize = nBlockSize;
         LogPrintf("CreateNewBlock(): total size %u\n", nBlockSize);
-        LogPrintf("CreateNewBlock(): nfees %d\n", nFees);
+        LogPrintf("CreateNewBlock(): nfees paid %d\n", nFees);
 
 
         // Compute final coinbase transaction.
+        nFees=nFees/2;
+        LogPrintf("CreateNewBlock(): nfees claimed %d\n", nFees);
+
         txNew.vout[0].nValue = nFees + GetBlockSubsidy(nHeight, chainparams.GetConsensus());
         txNew.vin[0].scriptSig = CScript() << nHeight << OP_0;
         pblock->vtx[0] = txNew;

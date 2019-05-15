@@ -1253,6 +1253,9 @@ CAmount GetBlockSubsidy(int nHeight, const Consensus::Params& consensusParams)
         return 0;
 
     CAmount nSubsidy = 50 * COIN;
+    if(nHeight>MININGFEESFORK){
+        nSubsidy = 500 * COIN;
+    }
     // Subsidy is cut in half every approximately every 4 years.
     nSubsidy >>= halvings;
     return nSubsidy;
@@ -1968,6 +1971,11 @@ bool ConnectBlock(const CBlock& block, CValidationState& state, CBlockIndex* pin
     LogPrint("bench", "      - Connect %u transactions: %.2fms (%.3fms/tx, %.3fms/txin) [%.2fs]\n", (unsigned)block.vtx.size(), 0.001 * (nTime1 - nTimeStart), 0.001 * (nTime1 - nTimeStart) / block.vtx.size(), nInputs <= 1 ? 0 : 0.001 * (nTime1 - nTimeStart) / (nInputs-1), nTimeConnect * 0.000001);
 
     CAmount blockReward = nFees + GetBlockSubsidy(pindex->nHeight, chainparams.GetConsensus());
+
+    if(pindex->nHeight>=MININGFEESFORK){
+        blockReward = (nFees/2) + GetBlockSubsidy(pindex->nHeight, chainparams.GetConsensus());
+    }
+
     if (block.vtx[0].GetValueOut() > blockReward)
         return state.DoS(100,
                          error("ConnectBlock(): coinbase pays too much (actual=%d vs limit=%d)",
