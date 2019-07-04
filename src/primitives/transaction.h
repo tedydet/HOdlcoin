@@ -12,7 +12,7 @@
 #include "uint256.h"
 
 static const unsigned int THEUNFORKENING = 257000;
-static const unsigned int MININGFEESFORK =   999999999;
+static const unsigned int MININGFEESFORK = 683000;
 
 /** An outpoint - a combination of a transaction hash and an index n into its vout */
 class COutPoint

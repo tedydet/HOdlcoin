@@ -219,6 +219,8 @@ std::string initRateTable(){
 
 CAmount GetInterest(CAmount nValue, int outputBlockHeight, int valuationHeight, int maturationBlock){
 
+
+
     //These conditions generally should not occur
     if(maturationBlock >= 500000000 || outputBlockHeight<0 || valuationHeight<0 || valuationHeight<outputBlockHeight){
         return nValue;
@@ -273,5 +275,19 @@ CAmount GetInterest(CAmount nValue, int outputBlockHeight, int valuationHeight, 
         }
     }
 
-    return nValue+interestAmount+termDepositAmount;
+    if(outputBlockHeight>=MININGFEESFORK){
+        //If output is higher than MININGFEESFORK, simple, add bonus 
+        return nValue+((interestAmount+termDepositAmount)*75);    
+    }else if(outputBlockHeight+blocks<=MININGFEESFORK){
+        //If output plus block earned interest on are lower or equal than MININGFEESFORK, simple straight interest 
+        return nValue+interestAmount+termDepositAmount;    
+    }else if(outputBlockHeight<MININGFEESFORK && outputBlockHeight+blocks>MININGFEESFORK){
+        //Complex situation here. interest straddles two periods. Need to break the interest into two parts
+        CAmount firstPeriod = GetInterest(nValue, outputBlockHeight, MININGFEESFORK, maturationBlock)-nValue;
+        CAmount secondPeriod = GetInterest(nValue, MININGFEESFORK+1, valuationHeight, maturationBlock)-nValue;
+        return nValue+firstPeriod+secondPeriod;    
+    }else{
+        //This should never be hit
+        return nValue;
+    }
 }
