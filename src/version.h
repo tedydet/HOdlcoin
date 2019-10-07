@@ -24,6 +24,7 @@ static const int MIN_PEER_PROTO_VERSION = GETHEADERS_VERSION;
 static const int MIN_PEER_PROTO_MINERHODLFORK_VERSION = 70010;
 static const int MIN_PEER_PROTO_THEUNFORKENING_VERSION = 250000;
 static const int MIN_PEER_PROTO_MINERFEES_VERSION = 683000;
+static const int MIN_PEER_PROTO_MINERFEES2_VERSION = 734000;
 
 //! nTime field added to CAddress, starting with this version;
 //! if possible, avoid requesting addresses nodes older than this
