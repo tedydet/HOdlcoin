@@ -132,8 +132,6 @@ public:
         vSeeds.push_back(CDNSSeedData("hodlcoin.fi", "seed.hodlcoin.fi"));//Canada, DNS seed, Orava
         vSeeds.push_back(CDNSSeedData("hodlcoin.dk", "seed.hodlcoin.dk"));//Denmark, DNS seed, SFL964   
         vSeeds.push_back(CDNSSeedData("hodlcoin.com", "seed.hodlcoin.com"));//For Future allocation
-        vSeeds.push_back(CDNSSeedData("54.201.171.55", "54.201.171.55"));
-        vSeeds.push_back(CDNSSeedData("54.213.104.91", "54.213.104.91"));
 
         base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1,40);
         base58Prefixes[SCRIPT_ADDRESS] = std::vector<unsigned char>(1,5);
