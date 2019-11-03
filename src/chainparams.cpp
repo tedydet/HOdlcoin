@@ -130,7 +130,6 @@ public:
 	vSeeds.push_back(CDNSSeedData("eu.hodlseed.amit.systems", "eu.hodlseed.amit.systems"));//Europe, Amit
 	vSeeds.push_back(CDNSSeedData("us.hodlseed.amit.systems", "us.hodlseed.amit.systems"));//US, Amit
         vSeeds.push_back(CDNSSeedData("hodlcoin.fi", "seed.hodlcoin.fi"));//Canada, DNS seed, Orava
-        vSeeds.push_back(CDNSSeedData("hodlcoin.dk", "seed.hodlcoin.dk"));//Denmark, DNS seed, SFL964   
         vSeeds.push_back(CDNSSeedData("hodlcoin.com", "seed.hodlcoin.com"));//For Future allocation
 
         base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1,40);
