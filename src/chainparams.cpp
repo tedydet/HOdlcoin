@@ -127,10 +127,18 @@ public:
         vSeeds.push_back(CDNSSeedData("europe.hodlcoin.com", "europe.hodlcoin.com")); //Europe
         vSeeds.push_back(CDNSSeedData("asia.hodlcoin.com", "asia.hodlcoin.com"));//Asia
         
-	vSeeds.push_back(CDNSSeedData("eu.hodlseed.amit.systems", "eu.hodlseed.amit.systems"));//Europe, Amit
-	vSeeds.push_back(CDNSSeedData("us.hodlseed.amit.systems", "us.hodlseed.amit.systems"));//US, Amit
         vSeeds.push_back(CDNSSeedData("hodlcoin.fi", "seed.hodlcoin.fi"));//Canada, DNS seed, Orava
-        vSeeds.push_back(CDNSSeedData("hodlcoin.com", "seed.hodlcoin.com"));//For Future allocation
+        vSeeds.push_back(CDNSSeedData("hodlcoin.dk", "seed.hodlcoin.dk"));//Denmark, DNS seed, SFL964    
+        vSeeds.push_back(CDNSSeedData("hodlcoin.com", "seed.hodlcoin.com"));//For Future allocation    
+        vSeeds.push_back(CDNSSeedData("174.140.166.133","174.140.166.133"));//Hodl-lay-yee-hoo
+        vSeeds.push_back(CDNSSeedData("54.201.171.55", "54.201.171.55"));
+        vSeeds.push_back(CDNSSeedData("54.213.104.91", "54.213.104.91"));
+        //vSeeds.push_back(CDNSSeedData("bitcoin.sipa.be", "seed.bitcoin.sipa.be")); // Pieter Wuille
+        //vSeeds.push_back(CDNSSeedData("bluematt.me", "dnsseed.bluematt.me")); // Matt Corallo
+        //vSeeds.push_back(CDNSSeedData("dashjr.org", "dnsseed.bitcoin.dashjr.org")); // Luke Dashjr
+        //vSeeds.push_back(CDNSSeedData("bitcoinstats.com", "seed.bitcoinstats.com")); // Christian Decker
+        //vSeeds.push_back(CDNSSeedData("xf2.org", "bitseed.xf2.org")); // Jeff Garzik
+        //vSeeds.push_back(CDNSSeedData("bitcoin.jonasschnelli.ch", "seed.bitcoin.jonasschnelli.ch")); // Jonas Schnelli
 
         base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1,40);
         base58Prefixes[SCRIPT_ADDRESS] = std::vector<unsigned char>(1,5);
